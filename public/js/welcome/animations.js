@@ -19,7 +19,7 @@ function like_id(id)
     var current_screen_images = current_screen.children;
     current_screen_images[0].removeAttribute("onclick");
     current_screen_images[1].removeAttribute("onclick");
-    
+     
     $.post( "http://localhost:8000/like-id", { id: id }, function (data)
     {
 
