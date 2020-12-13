@@ -25,7 +25,7 @@
 
                 <tr align=center class='first-row'>
                     <td> Photo </td>
-                    <td> Name </td>
+                    <td> Instagram </td>
                     <td> Likes </td>
                     <td> Viewed </td>
                     <td> Rating </td>
@@ -48,7 +48,7 @@
                         then (g.clicks / g.views)
                         else (0 - g.views) 
                     end as rating 
-                    FROM vk_girls g order by rating DESC, g.views DESC " . 
+                    FROM girls g order by rating DESC, g.views DESC " . 
                     ((isset($_GET['limit']) && is_numeric($_GET['limit'])) ? ('limit ' . $_GET['limit']) : " limit 40");
                     $result = $conn->query($sql);
 
@@ -64,7 +64,7 @@
                                             width=\"100%\"
                                             src=" . $row['photo_url'] . " /> 
                                     </td>
-                                    <td>" . $row['first_name'] . " " . $row['last_name'] . "</td>
+                                    <td>" . $row['instagram_username'] . "</td>
                                     <td>" . $row['clicks'] . "</td>
                                     <td>" . $row['views'] . "</td>
                                     <td>" . $row['rating'] . "</td>

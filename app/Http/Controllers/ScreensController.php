@@ -27,8 +27,8 @@ class ScreensController extends Controller
                     <div 
                         class=\"image left-image\" 
                         onclick=\"
-                            like_id($left_image->id);
-                            delete_id($right_image->id);
+                            like_id('$left_image->id');
+                            delete_id('$right_image->id');
                             go_next_screen()
                             \" 
                         name=\"$left_image->id\"
@@ -36,8 +36,8 @@ class ScreensController extends Controller
                     <div 
                         class=\"image right-image\" 
                         onclick=\"
-                            like_id($right_image->id);
-                            delete_id($left_image->id);
+                            like_id('$right_image->id');
+                            delete_id('$left_image->id');
                             go_next_screen()
                             \"
                             name=\"$right_image->id\"
@@ -64,7 +64,7 @@ class ScreensController extends Controller
 
     public function getRandomImage($id_to_ignore = null)
     {
-        $girl = DB::table('vk_girls')
+        $girl = DB::table('girls')
                     ->inRandomOrder()
                     ->first();
         if ($girl != null)
@@ -79,7 +79,7 @@ class ScreensController extends Controller
             [
                 "id" => $girl->id,
                 "url" => $girl->photo_url,
-                "name" => $girl->first_name . " " . $girl->last_name
+                "name" => $girl->instagram_username
             ];
 
             return $response;
@@ -95,85 +95,154 @@ class ScreensController extends Controller
 
     function addUsers()
     {
-        $access_token = "0c594d901ff851c711b3c480ccea2d3f5cdd09efa4ec7ceb13c41d82b109d5eaadd7c7dec1ded4f87875c";
-        $user_id = "1";
-        $v = "5.21";
-        $count = 1000;
-        $fields = implode(",",
-            [
-                "sex",
-                "has_photo",
-                "photo_max_orig"
-            ]);
+        $access_token = "nefCaNF9w2PqrUKQsSFHcL9rw6uoMqwMiYBn8vxkTA0";
+        
+        $data = 
+        [
+            "client_id" => $access_token,
+            "query" => "woman",
+            "orientation" => "portrait",
+            "count" => 30
+        ];
 
         $items = [];
-
-        for ($i = 0; $i < 5; $i++)
+        
+        for ($i = 0; $i < 10; $i++)
         {
-            $data = 
-            [
-                "access_token" => $access_token,
-                "user_id" => $user_id,
-                "v" => $v,
-                "count" => $count,
-                "offset" => $i * $count,
-                "fields" => $fields
-            ];
-
-            $response = Http::get('https://api.vk.com/method/users.getFollowers', $data);
-            $response = ((object)(json_decode($response, true)))->response;
-
-            foreach ($response['items'] as $item)
+            $response = Http::get('https://api.unsplash.com/photos/random', $data);
+            $response = (object)(json_decode($response, true));
+    
+            foreach ($response as $item)
             {
-                if ($item['sex'] == 1 && $item['has_photo'] == 1)
+                $item = (object)$item;
+                $new_item = 
+                [
+                    "id"         => $item->id,
+                    "first_name" => $item->user['first_name'],
+                    "last_name"  => $item->user['last_name'],
+                    "instagram_username"  => $item->user['instagram_username'],
+                    "photo_url"  => $item->urls['regular'],
+                ];
+                
+                $new_item = (object)$new_item;
+
+                $rows = DB::select("select * from girls where id = ?", [$new_item->id]);
+                if (count($rows) != 0)
                 {
-                    $new_item = 
-                    [
-                        "id" => $item['id'],
-                        "first_name" => $item['first_name'],
-                        "last_name" => $item['last_name'],
-                        "photo_url" => $item['photo_max_orig'],
-                    ];
-                    $new_item = (object)$new_item;
-
-                    $rows = DB::select("select * from vk_girls where id = ?", [$new_item->id]);
-                    if (count($rows) != 0)
-                    {
-                        continue;
-                    }
-
-                    DB::insert("insert into vk_girls
-                        (
-                            id,
-                            first_name,
-                            last_name,
-                            photo_url
-                        ) values
-                        (
-                            ?,
-                            ?,
-                            ?,
-                            ?
-                        )
-                    ", [
-                        $new_item->id,
-                        $new_item->first_name,
-                        $new_item->last_name,
-                        $new_item->photo_url
-                    ]);
-
-                    $items[] = $new_item;
+                    continue;
                 }
+
+                DB::insert("insert into girls
+                    (
+                        id,
+                        first_name,
+                        last_name,
+                        instagram_username,
+                        photo_url
+                    ) values
+                    (
+                        ?,
+                        ?,
+                        ?,
+                        ?,
+                        ?
+                    )
+                ", [
+                    $new_item->id,
+                    $new_item->first_name,
+                    $new_item->last_name,
+                    $new_item->instagram_username,
+                    $new_item->photo_url
+                ]);
+
+                $items[] = $new_item;
             }
         }
 
         return $items;
+
+        // old - not using now, but left for memory
+        // ------------------------------- VK -------------------------------------------------------
+
+        // $access_token = "0c594d901ff851c711b3c480ccea2d3f5cdd09efa4ec7ceb13c41d82b109d5eaadd7c7dec1ded4f87875c";
+        // $user_id = "1";
+        // $v = "5.21";
+        // $count = 1000;
+        // $fields = implode(",",
+        //     [
+        //         "sex",
+        //         "has_photo",
+        //         "photo_max_orig"
+        //     ]);
+
+        // $items = [];
+
+        // for ($i = 0; $i < 5; $i++)
+        // {
+        //     $data = 
+        //     [
+        //         "access_token" => $access_token,
+        //         "user_id" => $user_id,
+        //         "v" => $v,
+        //         "count" => $count,
+        //         "offset" => $i * $count,
+        //         "fields" => $fields
+        //     ];
+
+        //     $response = Http::get('https://api.vk.com/method/users.getFollowers', $data);
+        //     $response = ((object)(json_decode($response, true)))->response;
+
+        //     foreach ($response['items'] as $item)
+        //     {
+        //         if ($item['sex'] == 1 && $item['has_photo'] == 1)
+        //         {
+        //             $new_item = 
+        //             [
+        //                 "id" => $item['id'],
+        //                 "first_name" => $item['first_name'],
+        //                 "last_name" => $item['last_name'],
+        //                 "photo_url" => $item['photo_max_orig'],
+        //             ];
+        //             $new_item = (object)$new_item;
+
+        //             $rows = DB::select("select * from girls where id = ?", [$new_item->id]);
+        //             if (count($rows) != 0)
+        //             {
+        //                 continue;
+        //             }
+
+        //             DB::insert("insert into girls
+        //                 (
+        //                     id,
+        //                     first_name,
+        //                     last_name,
+        //                     photo_url
+        //                 ) values
+        //                 (
+        //                     ?,
+        //                     ?,
+        //                     ?,
+        //                     ?
+        //                 )
+        //             ", [
+        //                 $new_item->id,
+        //                 $new_item->first_name,
+        //                 $new_item->last_name,
+        //                 $new_item->photo_url
+        //             ]);
+
+        //             $items[] = $new_item;
+        //         }
+        //     }
+        // }
+
+        // return $items;
     }
 
     public function deleteId(Request $req)
     {
-        DB::table('vk_girls')->where('id', ($req->input())['id'])->delete();
-        $girl = DB::table('vk_girls')
+        DB::table('girls')->where('id', ($req->input())['id'])->delete();
+        $girl = DB::table('girls')
                     ->where('id', ($req->input())['id'])
                     ->first();
         if ($girl != null)
@@ -187,32 +256,32 @@ class ScreensController extends Controller
 
     public function likeId(Request $req)
     {
-        $clicks = DB::table('vk_girls')->where('id', ($req->input())['id'])->pluck('clicks')->first();
-        DB::table('vk_girls')->where('id', ($req->input())['id'])->update(['clicks' => $clicks + 1]);
+        $clicks = DB::table('girls')->where('id', ($req->input())['id'])->pluck('clicks')->first();
+        DB::table('girls')->where('id', ($req->input())['id'])->update(['clicks' => $clicks + 1]);
         return "ok";
     }
 
     function increaseViewId($id)
     {
-        $views = DB::table('vk_girls')->where('id', $id)->pluck('views')->first();
-        DB::table('vk_girls')->where('id', $id)->update(['views' => $views + 1]);
+        $views = DB::table('girls')->where('id', $id)->pluck('views')->first();
+        DB::table('girls')->where('id', $id)->update(['views' => $views + 1]);
         return "ok";
     }
 
     function zeroViewsClicks()
     {
-        DB::table('vk_girls')->update(['clicks' => 0]);
-        DB::table('vk_girls')->update(['views' => 0]);
+        DB::table('girls')->update(['clicks' => 0]);
+        DB::table('girls')->update(['views' => 0]);
     }
 
     public function convertCyrillicToLatin()
     {
-        $rows = DB::table('vk_girls')->get();
+        $rows = DB::table('girls')->get();
         foreach ($rows as $row)
         {
             $first_name = $this->convertCyrillic($row->first_name);
             $last_name = $this->convertCyrillic($row->last_name);
-            DB::table('vk_girls')->where('id', $row->id)->update(['first_name' => $first_name, 'last_name' => $last_name]);
+            DB::table('girls')->where('id', $row->id)->update(['first_name' => $first_name, 'last_name' => $last_name]);
         }
     }
 
@@ -240,14 +309,14 @@ class ScreensController extends Controller
         $first_name = ($req->input())['first_name'];
         $last_name = ($req->input())['last_name'];
 
-        $girl = DB::table('vk_girls')->where('photo_url', $url)->get()->first();
+        $girl = DB::table('girls')->where('photo_url', $url)->get()->first();
         if ($girl != null)
         {
             return response()->json([
                 'error' => 'Such girl already exists in database'], 403);
         }
 
-        DB::table('vk_girls')->insert([
+        DB::table('girls')->insert([
             //'id' => getNewId(),
             'first_name' => $first_name, 
             'last_name' => $last_name,
@@ -261,7 +330,7 @@ class ScreensController extends Controller
     {
         $rand = substr(md5(microtime()),rand(0,26),10);
 
-        $id = DB::table('vk_girls')->where('id', $rand)->get()->first();
+        $id = DB::table('girls')->where('id', $rand)->get()->first();
         if ($id != null)
         {
             // If such randomly generated ID already exists - generate a new one
