@@ -1,0 +1,101 @@
+:root
+{
+    --image-side: 7.5%;
+    --image-side-hover: 4.5%;
+    --image-width: 40%;
+    --image-width-hover: 45%;
+    --image-height: 70%;
+    --image-height-hover: 75%;
+}
+
+#content .screen
+{
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+    height: 100%;
+    display: none;
+}
+
+.image
+{
+    width: var(--image-width);
+    height: var(--image-height);
+    position: absolute;
+    top: 10%;
+    /* background-color: aqua; */
+    transition: 250ms;
+    z-index: 3;
+    
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.image:hover
+{
+    z-index: 5;
+    width: var(--image-width-hover);
+    height: var(--image-height-hover);
+    top: 7.5%;
+    cursor: pointer;
+    box-shadow:
+        0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+        0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+        0 12.5px 10px rgba(0, 0, 0, 0.06),
+        0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+        0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+        0 100px 80px rgba(0, 0, 0, 0.12)
+        ;
+}
+
+.left-image
+{
+    left: var(--image-side);
+}
+
+.left-image:hover
+{
+    left: var(--image-side-hover);
+}
+
+.right-image
+{
+    right: var(--image-side);
+}
+
+.right-image:hover
+{
+    right: var(--image-side-hover);
+}
+
+.name
+{
+    width: var(--image-width);
+    height: auto;
+    position: absolute;
+    bottom: 30px;
+    background-color: rgb(255, 180, 217);
+    transition: 250ms;
+    z-index: 3;
+    padding: 20px;
+    text-align: center;
+
+    
+    font-size: 4.5vh;
+    font-family: 'Arial';
+    font-weight: bold;
+    
+    color: var(--text);
+}
+
+.left-name
+{
+    left: var(--image-side);
+}
+
+.right-name
+{
+    right: var(--image-side);
+}

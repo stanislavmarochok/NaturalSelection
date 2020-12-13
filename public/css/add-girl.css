@@ -1,0 +1,233 @@
+:root
+{
+    --font: 'Arial';
+}
+
+.check-girl-url
+{
+    display: none;
+    background-color: lightblue;
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    width: 50%;
+    height: 80%;
+    padding: 20px;
+
+    border: 1px solid black;
+    border-radius: 30px;
+}
+
+.add-girl-form
+{
+    background-color: lightblue;
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    width: 50%;
+    padding: 20px;
+
+    border: 1px solid black;
+    border-radius: 30px;
+}
+
+.add-girl-form .input-field
+{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.add-girl-form .input-field input
+{
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-family: var(--font);
+    font-size: 15pt;
+
+    border-bottom: orangered 1px solid;
+}
+
+.add-girl-form-header
+{
+    font-size: 25pt;
+    font-family: var(--font);
+    font-weight: bold;
+    color: var(--text);
+    text-shadow: 
+        6px 6px        var(--shadow), 
+        5.75px 5.75px  var(--shadow), 
+        5.5px 5.5px    var(--shadow), 
+        5.25px 5.25px  var(--shadow),
+        5px 5px        var(--shadow), 
+        4.75px 4.75px  var(--shadow), 
+        4.5px 4.5px    var(--shadow), 
+        4.25px 4.25px  var(--shadow),
+        4px 4px        var(--shadow),
+        3.75px 3.75px  var(--shadow),
+        3.5px 3.5px    var(--shadow),
+        3.25px 3.25px  var(--shadow),
+        3px 3px        var(--shadow),
+        2.75px 2.75px  var(--shadow),
+        2.5px 2.5px    var(--shadow),
+        2.25px 2.25px  var(--shadow),
+        2px 2px        var(--shadow),
+        1.75px 1.75px  var(--shadow),
+        1.5px 1.5px    var(--shadow),
+        1.25px 1.25px  var(--shadow),
+        1px 1px        var(--shadow),
+        0.75px 0.75px  var(--shadow),
+        0.5px 0.5px    var(--shadow),
+        0.25px 0.25px  var(--shadow);
+
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.input-button
+{
+    width: 100%;
+}
+
+.input-button input
+{
+    width: 50%;
+    padding: 10px;
+
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+
+    margin-left: 25%;
+    margin-top: 50px;
+    margin-bottom: 20px;
+
+    font-size: 17pt;
+    font-family: var(--font);
+    font-weight: bold;
+    color: var(--text);
+
+    transition: 400ms;
+}
+
+.input-button input:hover
+{
+    width: 55%;
+    padding: 15px;
+    border-radius: 40px;
+
+    margin-left: 22.5%;
+    margin-top: 40px;
+    margin-bottom: 20px;
+
+    background-color: palegoldenrod;
+    color: var(--text);
+}
+
+.check-girl-url .input-button 
+{
+    margin-top: 10px;
+}
+
+.check-girl-url .input-button input
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.check-girl-url .input-button .no:hover
+{
+    background-color: rgb(255, 149, 100);
+}
+
+.check-girl-url .input-button .yes:hover
+{
+    background-color: rgb(66, 255, 138);
+}
+
+.check-girl-url h1
+{
+    font-family: var(--font);
+    font-weight: bold;
+}
+
+.girl-image
+{
+    width: 80%;
+    margin-left: 10%;
+    height: 70%;
+    transition: 250ms;
+    z-index: 3;
+
+    border-radius: 30px;
+    
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.girl-added-block
+{
+    background-color: lightblue;
+    position: absolute;
+    top: 15%;
+    left: 25%;
+    width: 50%;
+    padding: 20px;
+    display: none;
+
+    border: 1px solid black;
+    border-radius: 30px;
+}
+
+.girl-added-text
+{
+    font-size: 25pt;
+    font-family: var(--font);
+    font-weight: bold;
+    color: var(--text);
+    text-shadow: 
+        6px 6px        var(--shadow), 
+        5.75px 5.75px  var(--shadow), 
+        5.5px 5.5px    var(--shadow), 
+        5.25px 5.25px  var(--shadow),
+        5px 5px        var(--shadow), 
+        4.75px 4.75px  var(--shadow), 
+        4.5px 4.5px    var(--shadow), 
+        4.25px 4.25px  var(--shadow),
+        4px 4px        var(--shadow),
+        3.75px 3.75px  var(--shadow),
+        3.5px 3.5px    var(--shadow),
+        3.25px 3.25px  var(--shadow),
+        3px 3px        var(--shadow),
+        2.75px 2.75px  var(--shadow),
+        2.5px 2.5px    var(--shadow),
+        2.25px 2.25px  var(--shadow),
+        2px 2px        var(--shadow),
+        1.75px 1.75px  var(--shadow),
+        1.5px 1.5px    var(--shadow),
+        1.25px 1.25px  var(--shadow),
+        1px 1px        var(--shadow),
+        0.75px 0.75px  var(--shadow),
+        0.5px 0.5px    var(--shadow),
+        0.25px 0.25px  var(--shadow);
+
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.girl-added-image
+{
+    height: 30vh;
+    width: 50%;
+    margin: auto;
+
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('https://img.pngio.com/ready-png-4-png-image-ready-png-2000_2000.png');
+}

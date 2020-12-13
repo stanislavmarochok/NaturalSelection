@@ -1,0 +1,45 @@
+#content
+{
+    overflow-y: scroll;
+}
+
+#content table
+{
+    position: absolute;
+    top: 30px;
+    left: 20vw;
+    width: 60vw;
+}
+
+#content table tr
+{
+    transition: 400ms;
+}
+
+#content table tr:hover
+{
+    background-color: rgb(255, 217, 249);
+}
+
+#content table .first-row td
+{
+    height: 8vh;
+
+    font-size: 3vh;
+    font-family: 'Arial';
+    font-weight: bold;
+    
+    color: var(--text);
+}
+
+#content table .row td
+{
+    height: auto;
+    padding: 10px;
+
+    font-size: 2vh;
+    font-family: 'Arial';
+    font-weight: bold;
+    
+    color: black;
+}
